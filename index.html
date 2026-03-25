@@ -1083,6 +1083,25 @@
       musicPlaying = !musicPlaying;
     }
 
+    // Menghentikan musik saat user meminimize halaman atau pindah tab
+    document.addEventListener('visibilitychange', () => {
+      const a = document.getElementById('bg-music');
+      const btn = document.getElementById('music-btn');
+      if (document.hidden) {
+        // Halaman ditutup sementara / minimize
+        if (musicPlaying) {
+          a.pause();
+          btn.classList.remove('playing');
+        }
+      } else {
+        // Halaman dibuka kembali
+        if (musicPlaying) {
+          a.play().catch(() => {});
+          btn.classList.add('playing');
+        }
+      }
+    });
+
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.12 });
