@@ -5,10 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Undangan Pernikahan</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231c1c1c%22 rx=%2220%22/><text x=%2250%22 y=%2272%22 font-family=%22serif%22 font-size=%2265%22 fill=%22white%22 text-anchor=%22middle%22 font-style=%22italic%22>FF</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%231c1c1c%22 rx=%2220%22/><text x=%2250%22 y=%2272%22 font-family=%22serif%22 font-size=%2265%22 fill=%22white%22 text-anchor=%22middle%22 font-style=%22italic%22>FF</text></svg>">
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@100;300;400&display=swap"
     rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
   <style>
     *,
     *::before,
@@ -68,37 +70,16 @@
       gap: 40px;
     }
 
-    .env-svg-wrap {
-      width: 200px;
-      height: 150px;
-      position: relative;
+    .env-lily {
+      width: 180px;
+      height: auto;
+      object-fit: contain;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.1));
     }
 
-    .env-svg-wrap svg {
-      width: 100%;
-      height: 100%;
-      overflow: visible;
-    }
-
-    .env-flap-anim {
-      transform-origin: top center;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    #envelope-screen:hover .env-flap-anim {
-      transform: rotateX(160deg) scaleY(-1);
-    }
-
-    .env-monogram {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -20%);
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 28px;
-      color: var(--black);
-      pointer-events: none;
+    #envelope-screen:hover .env-lily {
+      transform: scale(1.05) rotate(3deg);
     }
 
     .env-text {
@@ -288,6 +269,78 @@
       max-width: 640px;
       margin: 0 auto;
       padding: 80px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bg-lily {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-lily::after {
+      content: '';
+      position: absolute;
+      background-image: url('assets/lily.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: brightness(0) invert(1);
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-lily.dark::after {
+      filter: brightness(0);
+    }
+
+    #hero.bg-lily::after {
+      width: clamp(300px, 60vw, 600px);
+      height: clamp(300px, 60vw, 600px);
+      bottom: -10%;
+      right: -20%;
+      transform: rotate(-20deg);
+    }
+
+    #surah.bg-lily::after {
+      width: clamp(250px, 50vw, 400px);
+      height: clamp(250px, 50vw, 400px);
+      top: -10%;
+      left: -10%;
+      transform: rotate(15deg) scaleX(-1);
+    }
+
+    #couple.bg-lily::after {
+      width: clamp(300px, 70vw, 700px);
+      height: clamp(300px, 70vw, 700px);
+      bottom: 0;
+      left: -20%;
+      transform: rotate(25deg);
+    }
+
+    #countdown.bg-lily::after {
+      width: clamp(200px, 40vw, 350px);
+      height: clamp(200px, 40vw, 350px);
+      bottom: -15%;
+      right: -5%;
+      transform: rotate(-30deg);
+    }
+
+    #acara.bg-lily::after {
+      width: clamp(250px, 50vw, 450px);
+      height: clamp(250px, 50vw, 450px);
+      top: -5%;
+      left: -15%;
+      transform: rotate(10deg);
+    }
+
+    #ucapan.bg-lily::after {
+      width: clamp(300px, 60vw, 600px);
+      height: clamp(300px, 60vw, 600px);
+      bottom: -10%;
+      right: -15%;
+      transform: rotate(-15deg) scaleX(-1);
     }
 
     .eyebrow {
@@ -516,6 +569,29 @@
       color: rgba(255, 255, 255, 0.4);
     }
 
+    #ucapan-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    #ucapan-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #ucapan-list::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    #ucapan-list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
     .ucapan-form {
       margin-top: 40px;
     }
@@ -740,16 +816,7 @@
   <!-- ENVELOPE -->
   <div id="envelope-screen" onclick="openInvitation()">
     <div class="env-wrap">
-      <div class="env-svg-wrap">
-        <svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="2" width="196" height="146" fill="#f5f5f3" stroke="#1c1c1c" stroke-width="1.5" />
-          <path d="M2 148 L100 82 L198 148" fill="#e8e8e8" stroke="#1c1c1c" stroke-width="1" />
-          <path d="M2 2 L100 82" stroke="#d0d0d0" stroke-width="0.8" />
-          <path d="M198 2 L100 82" stroke="#d0d0d0" stroke-width="0.8" />
-          <path class="env-flap-anim" d="M2 2 L100 74 L198 2 Z" fill="#1c1c1c" />
-        </svg>
-        <div class="env-monogram">&</div>
-      </div>
+      <img src="assets/lily.png" alt="Bunga Lily" class="env-lily" />
       <div class="env-text">
         <p class="env-eyebrow">Undangan Pernikahan</p>
         <h1>The<br><em>Wedding</em></h1>
@@ -770,7 +837,7 @@
   <main id="main-content">
 
     <!-- HERO -->
-    <section id="hero">
+    <section id="hero" class="bg-lily">
       <div class="hero-lines"></div>
       <div class="hero-corner tl"></div>
       <div class="hero-corner tr"></div>
@@ -788,6 +855,26 @@
         <p class="hero-date">Sabtu · 14 Juni 2025 · Jakarta</p>
       </div>
     </section>
+
+    <!-- SURAH -->
+    <div id="surah" class="bg-lily dark"
+      style="background:var(--off-white); padding: 80px 24px; text-align: center; border-bottom: 1px solid var(--pale);">
+      <div class="section-wrap reveal" style="padding: 0;">
+        <p
+          style="font-family:'Amiri', serif; font-size: 26px; line-height: 2.2; color: var(--black); margin-bottom: 24px; direction: rtl;">
+          وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ
+          مَوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ
+        </p>
+        <p id="surah-translation" class="body"
+          style="font-size: 13px; max-width: 500px; margin: 0 auto; line-height: 1.8;">
+          "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu
+          sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan
+          sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang
+          berpikir."
+        </p>
+        <p class="eyebrow" style="margin-top: 16px;">(QS. Ar-Rum: 21)</p>
+      </div>
+    </div>
 
     <!-- COUPLE -->
     <div id="couple">
@@ -813,7 +900,7 @@
     </div>
 
     <!-- COUNTDOWN -->
-    <div id="countdown">
+    <div id="countdown" class="bg-lily dark">
       <div class="section-wrap reveal">
         <p class="eyebrow">Menuju Hari Bahagia</p>
         <h2 class="section-title">Hitung Mundur</h2>
@@ -832,7 +919,7 @@
     </div>
 
     <!-- ACARA -->
-    <div id="acara">
+    <div id="acara" class="bg-lily dark">
       <div class="section-wrap reveal">
         <p class="eyebrow">Rangkaian Acara</p>
         <h2 class="section-title">Jadwal</h2>
@@ -858,8 +945,20 @@
       </div>
     </div>
 
+    <!-- CREDIT -->
+    <div id="credit" style="background: var(--white);">
+      <div class="section-wrap reveal"
+        style="padding: 60px 24px; text-align: center; border-bottom: 1px solid var(--pale);">
+        <p id="credit-text"
+          style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; color: #1e4d2b; line-height: 1.9; max-width: 500px; margin: 0 auto;">
+          "Undangan ini dibuat sendiri oleh saya sebagai calon Pengantin Pria. Bunga lily dipilih sebagai representasi
+          calon Pengantin Wanita karena merupakan bunga favorit calon istri saya."
+        </p>
+      </div>
+    </div>
+
     <!-- UCAPAN -->
-    <div id="ucapan">
+    <div id="ucapan" class="bg-lily">
       <div class="section-wrap reveal">
         <p class="eyebrow">Doa & Restu</p>
         <h2 class="section-title">Ucapan</h2>
@@ -881,7 +980,7 @@
           <h3
             style="font-family:'Playfair Display',serif; font-size:22px; color:var(--white); margin-bottom: 24px; text-align: left;">
             Daftar Ucapan</h3>
-          <div id="ucapan-list" style="display: flex; flex-direction: column; gap: 16px;">
+          <div id="ucapan-list">
             <!-- Ucapan items will be added here -->
           </div>
         </div>
@@ -903,6 +1002,72 @@
   </audio>
 
   <script>
+    function applyLanguage() {
+      const isEn = (new URLSearchParams(window.location.search).get('len') || new URLSearchParams(window.location.search).get('lang') || '').toLowerCase() === 'en';
+      if (!isEn) return;
+
+      const t = {
+        '.env-eyebrow': "Wedding Invitation",
+        '#credit-text': "\"This invitation was personally created by me as the prospective Groom. Lily flowers were chosen as a representation of the prospective Bride, as they are my future wife's favorite flower.\"",
+        '#guest-name-container p': "To:",
+        '#env-hint': "Tap to open",
+        '.hero-eyebrow': "By the Grace of God",
+        '.hero-date': "Saturday · June 14, 2025 · Jakarta",
+        '#surah-translation': "\"And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts. Verily in that are signs for those who reflect.\"",
+        '#couple .eyebrow': "The Couple",
+        '#couple .section-title': "Two Souls,<br><em style='font-style:italic;color:rgba(255,255,255,0.4)'>One Destiny</em>",
+        '#countdown .eyebrow': "Towards the Big Day",
+        '#countdown .section-title': "Countdown",
+        '#acara .eyebrow': "Event Details",
+        '#acara .section-title': "Schedule",
+        '#ucapan .eyebrow': "Wishes & Prayers",
+        '#ucapan .section-title': "Messages",
+        '#ucapan p.body': "Please leave your best wishes and prayers for us.",
+        '#ucapan-form-container .form-row:nth-child(1) label': "Full Name",
+        '#ucapan-form-container .form-row:nth-child(2) label': "Wishes & Prayers",
+        '#ucapan-list-container h3': "Message Board",
+        'footer .sub': "June 14, 2025 · Jakarta",
+        'footer .quote': "\"And over all these virtues put on love, which binds them all together in perfect unity.\""
+      };
+
+      for (const [sel, val] of Object.entries(t)) {
+        const el = document.querySelector(sel);
+        if (el) el.innerHTML = val;
+      }
+
+      const parents = document.querySelectorAll('#couple .parents');
+      if (parents[0]) parents[0].innerHTML = "Son of<br>Mr. — & Mrs. —";
+      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. — & Mrs. —";
+
+      const cdLabels = document.querySelectorAll('#countdown .count-label');
+      if (cdLabels.length === 4) {
+        cdLabels[0].innerText = "Days";
+        cdLabels[1].innerText = "Hours";
+        cdLabels[2].innerText = "Mins";
+        cdLabels[3].innerText = "Secs";
+      }
+
+      const evTypes = document.querySelectorAll('#acara .event-type');
+      if (evTypes[0]) evTypes[0].innerText = "Wedding Ceremony";
+      if (evTypes[1]) evTypes[1].innerText = "Wedding Reception";
+
+      const evTitles = document.querySelectorAll('#acara h3');
+      if (evTitles[0]) evTitles[0].innerText = "Holy Matrimony";
+      if (evTitles[1]) evTitles[1].innerText = "Celebration";
+
+      const btn = document.querySelector('.submit-btn');
+      if (btn) btn.innerText = "Send Message";
+
+      const nameInp = document.getElementById('ucapan-name');
+      if (nameInp) nameInp.placeholder = "Enter your name";
+
+      const msgInp = document.getElementById('ucapan-message');
+      if (msgInp) msgInp.placeholder = "Write a message for the couple...";
+
+      const backBtn = document.getElementById('back-btn');
+      if (backBtn) backBtn.title = "Close Invitation";
+    }
+
     function openInvitation() {
       document.getElementById('envelope-screen').classList.add('hidden');
       document.getElementById('main-content').classList.add('visible');
@@ -961,10 +1126,12 @@
     function loadUcapan() {
       if (SCRIPT_URL === 'URL_WEB_APP_ANDA_DISINI') return;
 
+      const isEn = (new URLSearchParams(window.location.search).get('len') || new URLSearchParams(window.location.search).get('lang') || '').toLowerCase() === 'en';
+
       const listContainer = document.getElementById('ucapan-list-container');
       const list = document.getElementById('ucapan-list');
       listContainer.style.display = 'block';
-      list.innerHTML = '<div style="color:var(--white); text-align:center;">Memuat ucapan...</div>';
+      list.innerHTML = `<div style="color:var(--white); text-align:center;">${isEn ? 'Loading messages...' : 'Memuat ucapan...'}</div>`;
 
       fetch(SCRIPT_URL)
         .then(res => res.json())
@@ -974,9 +1141,9 @@
             data.reverse().forEach(item => {
               const div = document.createElement('div');
               div.style.cssText = 'background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 16px; border-radius: 4px; text-align: left;';
-              
-              // Format bagian (Tamu: ...) agar font-nya lebih kecil dan tidak terlalu mencolok
-              const formattedName = item.nama.replace(/\(Tamu: (.*?)\)/g, '<span style="font-family:\'Lato\',sans-serif; font-size:12px; color:rgba(255,255,255,0.4); font-weight:300; margin-left:6px;">(Tamu: $1)</span>');
+
+              const guestLabel = isEn ? 'Guest' : 'Tamu';
+              const formattedName = item.nama.replace(/\((?:Tamu|Guest): (.*?)\)/g, `<span style="font-family:'Lato',sans-serif; font-size:12px; color:rgba(255,255,255,0.4); font-weight:300; margin-left:6px;">(${guestLabel}: $1)</span>`);
 
               div.innerHTML = `
               <div style="font-family:'Playfair Display',serif; font-size:18px; color:var(--white); margin-bottom:4px; display:flex; align-items:center;">${formattedName}</div>
@@ -986,12 +1153,11 @@
               list.appendChild(div);
             });
           } else {
-            list.innerHTML = '<div style="color:rgba(255,255,255,0.6); text-align:center;">Belum ada ucapan. Jadilah yang pertama!</div>';
+            list.innerHTML = `<div style="color:rgba(255,255,255,0.6); text-align:center;">${isEn ? 'No messages yet. Be the first!' : 'Belum ada ucapan. Jadilah yang pertama!'}</div>`;
           }
         })
         .catch(err => {
-          console.error('Error fetching ucapan:', err);
-          list.innerHTML = '<div style="color:rgba(255,255,255,0.6); text-align:center;">Gagal memuat daftar ucapan.</div>';
+          list.innerHTML = `<div style="color:rgba(255,255,255,0.6); text-align:center;">${isEn ? 'Failed to load messages.' : 'Gagal memuat daftar ucapan.'}</div>`;
         });
     }
 
@@ -1014,6 +1180,7 @@
 
     // Load awal ketika halaman dibuka
     window.addEventListener('DOMContentLoaded', () => {
+      applyLanguage();
       loadUcapan();
 
       const guestName = getGuestName();
@@ -1035,11 +1202,13 @@
       const name = nameInput.value.trim();
       const message = messageInput.value.trim();
 
-      if (!name) { alert('Mohon isi nama Anda.'); return; }
-      if (!message) { alert('Mohon isi ucapan Anda.'); return; }
+      const isEn = (new URLSearchParams(window.location.search).get('len') || new URLSearchParams(window.location.search).get('lang') || '').toLowerCase() === 'en';
+
+      if (!name) { alert(isEn ? 'Please enter your name.' : 'Mohon isi nama Anda.'); return; }
+      if (!message) { alert(isEn ? 'Please enter your message.' : 'Mohon isi ucapan Anda.'); return; }
 
       if (SCRIPT_URL === 'URL_WEB_APP_ANDA_DISINI') {
-        alert('Tautan/Link Spreadsheet belum dipasang di sistem.');
+        alert(isEn ? 'Spreadsheet URL not configured.' : 'Tautan/Link Spreadsheet belum dipasang di sistem.');
         return;
       }
 
@@ -1050,11 +1219,10 @@
         finalName = name + ' (Tamu: ' + guestName + ')';
       }
 
-      btn.textContent = 'MENGIRIM...';
+      btn.textContent = isEn ? 'SENDING...' : 'MENGIRIM...';
       btn.disabled = true;
 
       fetch(SCRIPT_URL, {
-        // Tidak pakai headers application/json supaya tidak membangkitkan CORS OPTIONS error di Apps Script
         method: 'POST',
         body: JSON.stringify({ nama: finalName, ucapan: message })
       })
@@ -1066,10 +1234,10 @@
         })
         .catch(err => {
           console.error(err);
-          alert('Gagal mengirim ucapan. Coba beberapa saat lagi.');
+          alert(isEn ? 'Failed to send message. Please try again later.' : 'Gagal mengirim ucapan. Coba beberapa saat lagi.');
         })
         .finally(() => {
-          btn.textContent = 'KIRIM UCAPAN';
+          btn.textContent = isEn ? 'SEND MESSAGE' : 'KIRIM UCAPAN';
           btn.disabled = false;
         });
     }
@@ -1096,7 +1264,7 @@
       } else {
         // Halaman dibuka kembali
         if (musicPlaying) {
-          a.play().catch(() => {});
+          a.play().catch(() => { });
           btn.classList.add('playing');
         }
       }
