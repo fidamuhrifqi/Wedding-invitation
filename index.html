@@ -322,8 +322,8 @@
     #countdown.bg-lily::after {
       width: clamp(200px, 40vw, 350px);
       height: clamp(200px, 40vw, 350px);
-      bottom: -15%;
-      right: -5%;
+      top: -20%;
+      right: -14%;
       transform: rotate(-30deg);
     }
 
@@ -896,17 +896,17 @@
       <img src="assets/lily.png" alt="Bunga Lily" class="env-lily" />
       <div class="env-text">
         <p class="env-eyebrow">Undangan Pernikahan</p>
-        <h1>The<br><em>Wedding</em></h1>
+        <h1>The Wedding of<br><em style="display:block; margin-top:10px;">Fida & Febi</em></h1>
 
-        <div id="guest-name-container" style="margin-top: 32px; display: none;">
+        <div id="guest-name-container" style="margin-top: 60px; display: none;">
           <p
             style="font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); margin-bottom: 4px;">
-            Kpd Yth.</p>
+            Tamu terhormat:</p>
           <h2 id="guest-name" style="font-family: 'Playfair Display', serif; font-size: 24px; color: var(--black);">Nama
             Tamu</h2>
         </div>
 
-        <p class="env-hint" id="env-hint" style="margin-top: 24px;">Ketuk untuk membuka</p>
+        <p class="env-hint" id="env-hint" style="margin-top: 24px; color: #9C0000">Ketuk untuk membuka</p>
       </div>
     </div>
   </div>
@@ -962,15 +962,15 @@
         <div class="rule" style="background:rgba(255,255,255,0.15)"></div>
         <div class="couple-grid">
           <div class="person">
-            <div class="person-initial">F</div>
+            <!-- <div class="person-initial">F</div> -->
             <h3>Fida M. Rifqi</h3>
-            <p class="parents">Putra dari<br>Bpk. Rakhmat Sudrajat & Ibu. Euis Kurnia Handayani</p>
+            <p class="parents">Putra dari<br>Bpk. Rakhmat Sudrajat <br> Ibu. Euis Kurnia Handayani</p>
           </div>
           <div class="couple-and">&</div>
           <div class="person">
-            <div class="person-initial">F</div>
+            <!-- <div class="person-initial">F</div> -->
             <h3>Febrianti</h3>
-            <p class="parents">Putri dari<br>Bpk. — & Ibu. Nia Saidah Mulyani</p>
+            <p class="parents">Putri dari<br>Bpk. — <br> Ibu. Nia Saidah Mulyani</p>
           </div>
         </div>
       </div>
@@ -983,13 +983,17 @@
         <h2 class="section-title">Hitung Mundur</h2>
         <div class="rule"></div>
         <div class="countdown-grid">
-          <div class="count-box"><span class="count-num" id="cd-days">--</span><span class="count-label">Hari</span>
+          <div class="count-box"><span class="count-num" id="cd-days" style="color: #1e4d2b">--</span><span
+              class="count-label">Hari</span>
           </div>
-          <div class="count-box"><span class="count-num" id="cd-hours">--</span><span class="count-label">Jam</span>
+          <div class="count-box"><span class="count-num" id="cd-hours" style="color: #1e4d2b">--</span><span
+              class="count-label">Jam</span>
           </div>
-          <div class="count-box"><span class="count-num" id="cd-mins">--</span><span class="count-label">Menit</span>
+          <div class="count-box"><span class="count-num" id="cd-mins" style="color: #1e4d2b">--</span><span
+              class="count-label">Menit</span>
           </div>
-          <div class="count-box"><span class="count-num" id="cd-secs">--</span><span class="count-label">Detik</span>
+          <div class="count-box"><span class="count-num" id="cd-secs" style="color: #1e4d2b">--</span><span
+              class="count-label">Detik</span>
           </div>
         </div>
       </div>
@@ -1120,7 +1124,7 @@
       const t = {
         '.env-eyebrow': "Wedding Invitation",
         '#credit-text': "\"This invitation was personally created by me as the prospective Groom. Lily flowers were chosen as a representation of the prospective Bride, as they are my future wife's favorite flower.\"",
-        '#guest-name-container p': "To:",
+        '#guest-name-container p': "Our Honnored Guest:",
         '#env-hint': "Tap to open",
         '.hero-eyebrow': "By the Grace of God",
         '.hero-date': "Sunday · August 2, 2026 · Bandung",
@@ -1152,8 +1156,8 @@
       }
 
       const parents = document.querySelectorAll('#couple .parents');
-      if (parents[0]) parents[0].innerHTML = "Son of<br>Mr. Rakhmat Sudrajat & Mrs. Euis Kurnia Handayani";
-      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. — & Mrs. Nia Saidah Mulyani";
+      if (parents[0]) parents[0].innerHTML = "Son of<br>Mr. Rakhmat Sudrajat <br> Mrs. Euis Kurnia Handayani";
+      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. — <br> Mrs. Nia Saidah Mulyani";
 
       const cdLabels = document.querySelectorAll('#countdown .count-label');
       if (cdLabels.length === 4) {
