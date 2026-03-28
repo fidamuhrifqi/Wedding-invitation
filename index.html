@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -285,7 +285,7 @@
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-      filter: brightness(0) invert(1);
+      /* filter: brightness(0) invert(1); */
       opacity: 0.1;
       pointer-events: none;
       z-index: 0;
@@ -546,6 +546,16 @@
     .event-detail .location {
       font-size: 13px;
       color: var(--mid);
+      display: inline-block;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(0, 0, 0, 0.3);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .event-detail a.location:hover {
+      color: var(--black);
+      border-color: var(--black);
     }
 
     /* UCAPAN */
@@ -656,6 +666,69 @@
 
     .submit-btn:hover {
       background: var(--pale);
+    }
+
+    /* GIFT */
+    #gift {
+      background: var(--off-white);
+      border-top: 1px solid var(--pale);
+    }
+
+    #gift.bg-lily::after {
+      width: clamp(250px, 50vw, 450px);
+      height: clamp(250px, 50vw, 450px);
+      top: -10%;
+      left: -10%;
+      transform: rotate(15deg);
+    }
+
+    .gift-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .gift-card {
+      background: var(--white);
+      border: 1px solid var(--pale);
+      padding: 32px 24px;
+      position: relative;
+    }
+
+    .gift-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--black);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .gift-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .copy-btn {
+      padding: 14px 24px;
+      background: var(--charcoal);
+      color: var(--white);
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.3s;
+      width: 100%;
+    }
+
+    .copy-btn:hover {
+      background: var(--black);
     }
 
     /* BACK & MUSIC */
@@ -807,6 +880,10 @@
       .count-num {
         font-size: 36px;
       }
+
+      .gift-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -846,13 +923,13 @@
       <div class="hero-inner">
         <p class="hero-eyebrow">Dengan Rahmat Allah SWT</p>
         <h1 class="hero-names">
-          Nama Pria
-          <em>& Nama Wanita</em>
+          Fida M. Rifqi
+          <em>& Febrianti</em>
         </h1>
         <div class="hero-rule">
           <span class="line"></span><span class="diamond"></span><span class="line"></span>
         </div>
-        <p class="hero-date">Sabtu · 14 Juni 2025 · Jakarta</p>
+        <p class="hero-date">Minggu · 2 Agustus 2026 · Bandung</p>
       </div>
     </section>
 
@@ -885,15 +962,15 @@
         <div class="rule" style="background:rgba(255,255,255,0.15)"></div>
         <div class="couple-grid">
           <div class="person">
-            <div class="person-initial">N</div>
-            <h3>Nama Pria</h3>
-            <p class="parents">Putra dari<br>Bpk. — & Ibu —</p>
+            <div class="person-initial">F</div>
+            <h3>Fida M. Rifqi</h3>
+            <p class="parents">Putra dari<br>Bpk. Rakhmat Sudrajat & Ibu. Euis Kurnia Handayani</p>
           </div>
           <div class="couple-and">&</div>
           <div class="person">
-            <div class="person-initial">N</div>
-            <h3>Nama Wanita</h3>
-            <p class="parents">Putri dari<br>Bpk. — & Ibu —</p>
+            <div class="person-initial">F</div>
+            <h3>Febrianti</h3>
+            <p class="parents">Putri dari<br>Bpk. — & Ibu. Nia Saidah Mulyani</p>
           </div>
         </div>
       </div>
@@ -926,19 +1003,20 @@
         <div class="rule"></div>
         <div class="event-list">
           <div class="event-item">
-            <div class="event-time">09<small>WIB</small></div>
+            <div class="event-time">15<small>WIB</small></div>
             <div class="event-detail">
               <p class="event-type">Akad Nikah</p>
               <h3>Prosesi Ijab Kabul</h3>
-              <p class="location">📍 Masjid Al-Hikmah, Jakarta</p>
+              <a href="https://www.google.com/maps/place/Steikhaus/@-6.9457222,107.6387258,17z/data=!3m1!4b1!4m6!3m5!1s0x2e68e9228a6f12f7:0x4c8e38bdd6c3927a!8m2!3d-6.9457222!4d107.6387258!16s%2Fg%2F11tk8kwxb_?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" class="location" title="Buka di Google Maps">📍 Steikhaus, Bandung</a>
             </div>
           </div>
           <div class="event-item">
-            <div class="event-time">13<small>WIB</small></div>
+            <div class="event-time">17<small>WIB</small></div>
             <div class="event-detail">
-              <p class="event-type">Resepsi</p>
-              <h3>Pesta Pernikahan</h3>
-              <p class="location">📍 Ballroom Hotel Mulia, Jakarta</p>
+              <h3>Ramah Tamah</h3>
+              <a href="https://www.google.com/maps/place/Steikhaus/@-6.9457222,107.6387258,17z/data=!3m1!4b1!4m6!3m5!1s0x2e68e9228a6f12f7:0x4c8e38bdd6c3927a!8m2!3d-6.9457222!4d107.6387258!16s%2Fg%2F11tk8kwxb_?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" class="location" title="Buka di Google Maps">📍 Steikhaus, Bandung</a>
             </div>
           </div>
         </div>
@@ -987,11 +1065,44 @@
       </div>
     </div>
 
+    <!-- GIFT -->
+    <div id="gift" class="bg-lily dark">
+      <div class="section-wrap reveal" style="text-align: center;">
+        <p class="eyebrow">Tanda Kasih</p>
+        <h2 class="section-title">Kirim Hadiah</h2>
+        <div class="rule" style="margin: 20px auto;"></div>
+        <p class="body">Bagi keluarga dan sahabat yang ingin memberikan tanda kasih untuk kami, dapat melalui rekening
+          di bawah ini:</p>
+
+        <div class="gift-grid">
+          <!-- Rekening 1 -->
+          <div class="gift-card">
+            <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank BCA</h3>
+            <p
+              style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:400; letter-spacing:2px; margin-bottom:8px; color:var(--dark);">
+              0000000000</p>
+            <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Fida M. Rifqi</p>
+            <button class="copy-btn" onclick="copyRek('0000000000', this)">Salin Rekening</button>
+          </div>
+          <!-- Rekening 2 -->
+          <div class="gift-card">
+            <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank Mandiri
+            </h3>
+            <p
+              style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:400; letter-spacing:2px; margin-bottom:8px; color:var(--dark);">
+              0000000000</p>
+            <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Febrianti</p>
+            <button class="copy-btn" onclick="copyRek('0000000000', this)">Salin Rekening</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <footer>
-    <p class="footer-names">Nama Pria <em>& Nama Wanita</em></p>
-    <p class="sub">14 Juni 2025 · Jakarta</p>
+    <p class="footer-names">Fida M. Rifqi & Febrianti</p>
+    <p class="sub">2 Agustus 2026 · Bandung</p>
     <p class="quote">"Semoga menjadi keluarga yang sakinah, mawaddah, warahmah"</p>
   </footer>
 
@@ -1012,7 +1123,7 @@
         '#guest-name-container p': "To:",
         '#env-hint': "Tap to open",
         '.hero-eyebrow': "By the Grace of God",
-        '.hero-date': "Saturday · June 14, 2025 · Jakarta",
+        '.hero-date': "Sunday · August 2, 2026 · Bandung",
         '#surah-translation': "\"And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts. Verily in that are signs for those who reflect.\"",
         '#couple .eyebrow': "The Couple",
         '#couple .section-title': "Two Souls,<br><em style='font-style:italic;color:rgba(255,255,255,0.4)'>One Destiny</em>",
@@ -1026,7 +1137,12 @@
         '#ucapan-form-container .form-row:nth-child(1) label': "Full Name",
         '#ucapan-form-container .form-row:nth-child(2) label': "Wishes & Prayers",
         '#ucapan-list-container h3': "Message Board",
-        'footer .sub': "June 14, 2025 · Jakarta",
+        '#gift .eyebrow': "Digital Gift",
+        '#gift .section-title': "Send a Gift",
+        '#gift .body': "For family and friends who wish to send a gift, you may transfer to the accounts below:",
+        '.gift-card:nth-child(1) .copy-btn': "COPY NUMBER",
+        '.gift-card:nth-child(2) .copy-btn': "COPY NUMBER",
+        'footer .sub': "August 2, 2026 · Bandung",
         'footer .quote': "\"And over all these virtues put on love, which binds them all together in perfect unity.\""
       };
 
@@ -1036,8 +1152,8 @@
       }
 
       const parents = document.querySelectorAll('#couple .parents');
-      if (parents[0]) parents[0].innerHTML = "Son of<br>Mr. — & Mrs. —";
-      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. — & Mrs. —";
+      if (parents[0]) parents[0].innerHTML = "Son of<br>Mr. Rakhmat Sudrajat & Mrs. Euis Kurnia Handayani";
+      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. — & Mrs. Nia Saidah Mulyani";
 
       const cdLabels = document.querySelectorAll('#countdown .count-label');
       if (cdLabels.length === 4) {
@@ -1049,11 +1165,10 @@
 
       const evTypes = document.querySelectorAll('#acara .event-type');
       if (evTypes[0]) evTypes[0].innerText = "Wedding Ceremony";
-      if (evTypes[1]) evTypes[1].innerText = "Wedding Reception";
 
       const evTitles = document.querySelectorAll('#acara h3');
       if (evTitles[0]) evTitles[0].innerText = "Holy Matrimony";
-      if (evTitles[1]) evTitles[1].innerText = "Celebration";
+      if (evTitles[1]) evTitles[1].innerText = "Warm hospitality";
 
       const btn = document.querySelector('.submit-btn');
       if (btn) btn.innerText = "Send Message";
@@ -1066,6 +1181,15 @@
 
       const backBtn = document.getElementById('back-btn');
       if (backBtn) backBtn.title = "Close Invitation";
+    }
+
+    function copyRek(text, btn) {
+      const isEn = (new URLSearchParams(window.location.search).get('len') || new URLSearchParams(window.location.search).get('lang') || '').toLowerCase() === 'en';
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = isEn ? "COPIED!" : "TERSALIN!";
+        setTimeout(() => { btn.innerText = originalText; }, 2000);
+      });
     }
 
     function openInvitation() {
@@ -1109,7 +1233,7 @@
       }, 800);
     }
 
-    const weddingDate = new Date('2025-06-14T09:00:00');
+    const weddingDate = new Date('2026-08-02T15:00:00');
     function tick() {
       const diff = weddingDate - new Date();
       const pad = n => String(Math.max(0, n)).padStart(2, '0');
