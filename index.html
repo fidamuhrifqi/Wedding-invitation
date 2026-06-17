@@ -649,6 +649,37 @@
       min-height: 80px;
     }
 
+    .attend-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .attend-btn {
+      flex: 1;
+      padding: 14px 12px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-family: 'Lato', sans-serif;
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .attend-btn:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .attend-btn.selected {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
     .submit-btn {
       width: 100%;
       padding: 20px;
@@ -956,9 +987,7 @@
     <!-- COUPLE -->
     <div id="couple">
       <div class="section-wrap reveal">
-        <p class="eyebrow" style="color:rgba(255,255,255,0.3)">Mempelai</p>
-        <h2 class="section-title" style="color:var(--white)">Dua Jiwa,<br><em
-            style="font-style:italic;color:rgba(255,255,255,0.4)">Satu Takdir</em></h2>
+        <h2 class="section-title" style="font-style:italic;color:rgba(255,255,255,0.4)">Mempelai</h2>
         <div class="rule" style="background:rgba(255,255,255,0.15)"></div>
         <div class="couple-grid">
           <div class="person">
@@ -1055,7 +1084,23 @@
             <label>Ucapan & Doa</label>
             <textarea id="ucapan-message" placeholder="Tulis ucapan untuk kedua mempelai…"></textarea>
           </div>
+          <div class="form-row">
+            <label id="attend-label">Konfirmasi Kehadiran</label>
+            <div class="attend-group">
+              <button type="button" class="attend-btn" id="attend-hadir" onclick="selectAttend('hadir')">Hadir</button>
+              <button type="button" class="attend-btn" id="attend-tidak" onclick="selectAttend('tidak')">Tidak Hadir</button>
+            </div>
+          </div>
+          <div class="form-row" id="jumlah-row" style="display:none;">
+            <label id="jumlah-label">Jumlah Tamu</label>
+            <input type="number" id="ucapan-jumlah" min="1" placeholder="Berapa orang yang hadir?">
+          </div>
           <button class="submit-btn" onclick="submitUcapan()">Kirim Ucapan</button>
+        </div>
+
+        <div id="ucapan-thanks" style="display:none; text-align:center; padding: 24px 0; color: rgba(255,255,255,0.5); font-size: 14px; line-height: 2;">
+          Terima kasih atas ucapan dan doanya.<br>
+          <span style="font-family:'Playfair Display',serif; font-style:italic; font-size:18px; color:var(--white);">Jazakumullahu khairan.</span>
         </div>
 
         <div class="ucapan-list-container" id="ucapan-list-container" style="margin-top: 48px; display: none;">
@@ -1084,19 +1129,19 @@
             <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank BCA</h3>
             <p
               style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:400; letter-spacing:2px; margin-bottom:8px; color:var(--dark);">
-              0000000000</p>
-            <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Fida M. Rifqi</p>
-            <button class="copy-btn" onclick="copyRek('0000000000', this)">Salin Rekening</button>
+              3761668267</p>
+            <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Fida Muhamad Rifqi</p>
+            <button class="copy-btn" onclick="copyRek('3761668267', this)">Salin Rekening</button>
           </div>
           <!-- Rekening 2 -->
           <div class="gift-card">
-            <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank Mandiri
+            <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank BCA
             </h3>
             <p
               style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:400; letter-spacing:2px; margin-bottom:8px; color:var(--dark);">
-              0000000000</p>
+              2832675416</p>
             <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Febrianti</p>
-            <button class="copy-btn" onclick="copyRek('0000000000', this)">Salin Rekening</button>
+            <button class="copy-btn" onclick="copyRek('2832675416', this)">Salin Rekening</button>
           </div>
         </div>
       </div>
@@ -1130,7 +1175,6 @@
         '.hero-date': "Sunday · August 2, 2026 · Bandung",
         '#surah-translation': "\"And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts. Verily in that are signs for those who reflect.\"",
         '#couple .eyebrow': "The Couple",
-        '#couple .section-title': "Two Souls,<br><em style='font-style:italic;color:rgba(255,255,255,0.4)'>One Destiny</em>",
         '#countdown .eyebrow': "Towards the Big Day",
         '#countdown .section-title': "Countdown",
         '#acara .eyebrow': "Event Details",
@@ -1157,7 +1201,7 @@
 
       const parents = document.querySelectorAll('#couple .parents');
       if (parents[0]) parents[0].innerHTML = "Son of<br>Mr. Rakhmat Sudrajat <br> Mrs. Euis Kurnia Handayani";
-      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. — <br> Mrs. Nia Saidah Mulyani";
+      if (parents[1]) parents[1].innerHTML = "Daughter of<br>Mr. Dani Permana <br> Mrs. Nia Saidah Mulyani";
 
       const cdLabels = document.querySelectorAll('#countdown .count-label');
       if (cdLabels.length === 4) {
@@ -1182,6 +1226,19 @@
 
       const msgInp = document.getElementById('ucapan-message');
       if (msgInp) msgInp.placeholder = "Write a message for the couple...";
+
+      const attendLabel = document.getElementById('attend-label');
+      if (attendLabel) attendLabel.innerText = "RSVP";
+      const attendHadir = document.getElementById('attend-hadir');
+      if (attendHadir) attendHadir.innerText = "Attending";
+      const attendTidak = document.getElementById('attend-tidak');
+      if (attendTidak) attendTidak.innerText = "Not Attending";
+      const jumlahLabel = document.getElementById('jumlah-label');
+      if (jumlahLabel) jumlahLabel.innerText = "Number of Guests";
+      const jumlahInp = document.getElementById('ucapan-jumlah');
+      if (jumlahInp) jumlahInp.placeholder = "How many guests will attend?";
+      const ucapanThanks = document.getElementById('ucapan-thanks');
+      if (ucapanThanks) ucapanThanks.innerHTML = 'Thank you for your wishes and prayers.<br><span style="font-family:\'Playfair Display\',serif; font-style:italic; font-size:18px; color:var(--white);">Jazakumullahu khairan.</span>';
 
       const backBtn = document.getElementById('back-btn');
       if (backBtn) backBtn.title = "Close Invitation";
@@ -1311,6 +1368,12 @@
       applyLanguage();
       loadUcapan();
 
+      if (sessionStorage.getItem('ucapanSent')) {
+        document.getElementById('ucapan-form-container').style.display = 'none';
+        const thanks = document.getElementById('ucapan-thanks');
+        if (thanks) thanks.style.display = 'block';
+      }
+
       const guestName = getGuestName();
       if (guestName) {
         document.getElementById('guest-name').textContent = guestName;
@@ -1329,11 +1392,14 @@
 
       const name = nameInput.value.trim();
       const message = messageInput.value.trim();
+      const jumlahInput = document.getElementById('ucapan-jumlah');
+      const jumlah = jumlahInput ? jumlahInput.value.trim() : '';
 
       const isEn = (new URLSearchParams(window.location.search).get('len') || new URLSearchParams(window.location.search).get('lang') || '').toLowerCase() === 'en';
 
       if (!name) { alert(isEn ? 'Please enter your name.' : 'Mohon isi nama Anda.'); return; }
       if (!message) { alert(isEn ? 'Please enter your message.' : 'Mohon isi ucapan Anda.'); return; }
+      if (attendStatus === 'hadir' && !jumlah) { alert(isEn ? 'Please enter the number of guests.' : 'Mohon isi jumlah tamu yang hadir.'); return; }
 
       if (SCRIPT_URL === 'URL_WEB_APP_ANDA_DISINI') {
         alert(isEn ? 'Spreadsheet URL not configured.' : 'Tautan/Link Spreadsheet belum dipasang di sistem.');
@@ -1352,13 +1418,22 @@
 
       fetch(SCRIPT_URL, {
         method: 'POST',
-        body: JSON.stringify({ nama: finalName, ucapan: message })
+        body: JSON.stringify({ nama: finalName, ucapan: message, hadir: attendStatus, jumlah: jumlah })
       })
         .then(res => res.json())
         .then(data => {
           nameInput.value = '';
           messageInput.value = '';
-          loadUcapan(); // reload daftar ucapan
+          attendStatus = '';
+          document.getElementById('attend-hadir').classList.remove('selected');
+          document.getElementById('attend-tidak').classList.remove('selected');
+          document.getElementById('jumlah-row').style.display = 'none';
+          if (jumlahInput) jumlahInput.value = '';
+          sessionStorage.setItem('ucapanSent', 'true');
+          document.getElementById('ucapan-form-container').style.display = 'none';
+          const thanks = document.getElementById('ucapan-thanks');
+          if (thanks) thanks.style.display = 'block';
+          loadUcapan();
         })
         .catch(err => {
           console.error(err);
@@ -1368,6 +1443,17 @@
           btn.textContent = isEn ? 'SEND MESSAGE' : 'KIRIM UCAPAN';
           btn.disabled = false;
         });
+    }
+
+    let attendStatus = '';
+
+    function selectAttend(val) {
+      attendStatus = val;
+      document.getElementById('attend-hadir').classList.toggle('selected', val === 'hadir');
+      document.getElementById('attend-tidak').classList.toggle('selected', val === 'tidak');
+      const jumlahRow = document.getElementById('jumlah-row');
+      jumlahRow.style.display = val === 'hadir' ? 'block' : 'none';
+      if (val === 'tidak') document.getElementById('ucapan-jumlah').value = '';
     }
 
     let musicPlaying = false;
