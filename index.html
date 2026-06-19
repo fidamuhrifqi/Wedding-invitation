@@ -151,13 +151,6 @@
       text-align: center;
     }
 
-    .hero-lines {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255, 255, 255, 0.02) 79px, rgba(255, 255, 255, 0.02) 80px);
-    }
-
     .hero-corner {
       position: absolute;
       width: 80px;
@@ -208,7 +201,7 @@
       font-family: 'Playfair Display', serif;
       font-size: clamp(56px, 12vw, 100px);
       font-weight: 400;
-      line-height: 0.9;
+      line-height: 1.25;
       color: var(--white);
       animation: fadeUp 1s ease 0.7s both;
     }
@@ -271,6 +264,19 @@
       padding: 80px 24px;
       position: relative;
       z-index: 1;
+      width: 100%;
+    }
+
+    #surah,
+    #couple,
+    #countdown,
+    #acara,
+    #ucapan,
+    #gift {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .bg-lily {
@@ -278,6 +284,7 @@
       overflow: hidden;
     }
 
+    .bg-lily::before,
     .bg-lily::after {
       content: '';
       position: absolute;
@@ -291,8 +298,14 @@
       z-index: 0;
     }
 
+    .bg-lily.dark::before,
     .bg-lily.dark::after {
       filter: brightness(0);
+    }
+
+    #hero.bg-lily::before,
+    #gift.bg-lily::before {
+      display: none;
     }
 
     #hero.bg-lily::after {
@@ -303,44 +316,90 @@
       transform: rotate(-20deg);
     }
 
+    #surah.bg-lily::before {
+      width: clamp(220px, 42vw, 360px);
+      height: clamp(220px, 42vw, 360px);
+      top: -8%;
+      left: -12%;
+      transform: rotate(18deg) scaleX(-1);
+    }
+
     #surah.bg-lily::after {
-      width: clamp(250px, 50vw, 400px);
-      height: clamp(250px, 50vw, 400px);
-      top: -10%;
-      left: -10%;
-      transform: rotate(15deg) scaleX(-1);
+      width: clamp(200px, 38vw, 320px);
+      height: clamp(200px, 38vw, 320px);
+      bottom: -6%;
+      right: -14%;
+      transform: rotate(-22deg);
+    }
+
+    #couple.bg-lily::before {
+      width: clamp(240px, 46vw, 380px);
+      height: clamp(240px, 46vw, 380px);
+      top: 4%;
+      left: -8%;
+      transform: rotate(-14deg);
     }
 
     #couple.bg-lily::after {
-      width: clamp(300px, 70vw, 700px);
-      height: clamp(300px, 70vw, 700px);
-      bottom: 0;
-      left: -20%;
-      transform: rotate(25deg);
+      width: clamp(260px, 52vw, 440px);
+      height: clamp(260px, 52vw, 440px);
+      bottom: 2%;
+      right: -10%;
+      transform: rotate(26deg) scaleX(-1);
+    }
+
+    /* ponytail: couple bg is pure black, bump opacity so the red lily reads */
+    #couple.bg-lily::before,
+    #couple.bg-lily::after {
+      opacity: 0.22;
+    }
+
+    #countdown.bg-lily::before {
+      width: clamp(200px, 40vw, 320px);
+      height: clamp(200px, 40vw, 320px);
+      top: -12%;
+      left: -10%;
+      transform: rotate(22deg);
     }
 
     #countdown.bg-lily::after {
-      width: clamp(200px, 40vw, 350px);
-      height: clamp(200px, 40vw, 350px);
-      top: -20%;
-      right: -14%;
-      transform: rotate(-30deg);
+      width: clamp(220px, 44vw, 360px);
+      height: clamp(220px, 44vw, 360px);
+      bottom: -10%;
+      right: -12%;
+      transform: rotate(-18deg) scaleX(-1);
+    }
+
+    #acara.bg-lily::before {
+      width: clamp(230px, 46vw, 380px);
+      height: clamp(230px, 46vw, 380px);
+      top: -6%;
+      left: -15%;
+      transform: rotate(14deg) scaleX(-1);
     }
 
     #acara.bg-lily::after {
-      width: clamp(250px, 50vw, 450px);
-      height: clamp(250px, 50vw, 450px);
-      top: -5%;
-      left: -15%;
-      transform: rotate(10deg);
+      width: clamp(200px, 40vw, 320px);
+      height: clamp(200px, 40vw, 320px);
+      bottom: -8%;
+      right: -10%;
+      transform: rotate(-25deg);
+    }
+
+    #ucapan.bg-lily::before {
+      width: clamp(240px, 48vw, 400px);
+      height: clamp(240px, 48vw, 400px);
+      top: -10%;
+      left: -12%;
+      transform: rotate(-16deg);
     }
 
     #ucapan.bg-lily::after {
-      width: clamp(300px, 60vw, 600px);
-      height: clamp(300px, 60vw, 600px);
+      width: clamp(220px, 44vw, 360px);
+      height: clamp(220px, 44vw, 360px);
       bottom: -10%;
       right: -15%;
-      transform: rotate(-15deg) scaleX(-1);
+      transform: rotate(20deg) scaleX(-1);
     }
 
     .eyebrow {
@@ -946,7 +1005,6 @@
 
     <!-- HERO -->
     <section id="hero" class="bg-lily">
-      <div class="hero-lines"></div>
       <div class="hero-corner tl"></div>
       <div class="hero-corner tr"></div>
       <div class="hero-corner bl"></div>
@@ -954,8 +1012,8 @@
       <div class="hero-inner">
         <p class="hero-eyebrow">Dengan Rahmat Allah SWT</p>
         <h1 class="hero-names">
-          Fida M. Rifqi
-          <em>& Febrianti</em>
+          Fida M. Rifqi<br>
+          & Febrianti
         </h1>
         <div class="hero-rule">
           <span class="line"></span><span class="diamond"></span><span class="line"></span>
@@ -969,12 +1027,12 @@
       style="background:var(--off-white); padding: 80px 24px; text-align: center; border-bottom: 1px solid var(--pale);">
       <div class="section-wrap reveal" style="padding: 0;">
         <p
-          style="font-family:'Amiri', serif; font-size: 26px; line-height: 2.2; color: var(--black); margin-bottom: 24px; direction: rtl;">
+          style="font-family:'Amiri', serif; font-size: 26px; line-height: 2.2; color: var(--black); margin-bottom: 48px; direction: rtl;">
           وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنْفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُمْ
           مَوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِقَوْمٍ يَتَفَكَّرُونَ
         </p>
         <p id="surah-translation" class="body"
-          style="font-size: 13px; max-width: 500px; margin: 0 auto; line-height: 1.8;">
+          style="font-size: 13px; max-width: 500px; margin: 0 auto; line-height: 1.8; color: #1e4d2b;">
           "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu
           sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan
           sayang. Sungguh, pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang
@@ -985,10 +1043,10 @@
     </div>
 
     <!-- COUPLE -->
-    <div id="couple">
+    <div id="couple" class="bg-lily">
       <div class="section-wrap reveal">
-        <h2 class="section-title" style="font-style:italic;color:rgba(255,255,255,0.4)">Mempelai</h2>
-        <div class="rule" style="background:rgba(255,255,255,0.15)"></div>
+        <h2 class="section-title" style="font-style:italic;color:rgba(255,255,255,0.4)">Calon Mempelai</h2>
+        <div class="rule" style="background:rgba(255,255,255,0.15); width:160px"></div>
         <div class="couple-grid">
           <div class="person">
             <!-- <div class="person-initial">F</div> -->
@@ -1031,15 +1089,13 @@
     <!-- ACARA -->
     <div id="acara" class="bg-lily dark">
       <div class="section-wrap reveal">
-        <p class="eyebrow">Rangkaian Acara</p>
-        <h2 class="section-title">Jadwal</h2>
+        <h2 class="section-title">Rangkaian Acara</h2>
         <div class="rule"></div>
         <div class="event-list">
           <div class="event-item">
             <div class="event-time">15<small>WIB</small></div>
             <div class="event-detail">
-              <p class="event-type">Akad Nikah</p>
-              <h3>Prosesi Ijab Kabul</h3>
+              <h3>Akad Nikah</h3>
               <a href="https://www.google.com/maps/place/Steikhaus/@-6.9457222,107.6387258,17z/data=!3m1!4b1!4m6!3m5!1s0x2e68e9228a6f12f7:0x4c8e38bdd6c3927a!8m2!3d-6.9457222!4d107.6387258!16s%2Fg%2F11tk8kwxb_?entry=ttu&g_ep=EgoyMDI2MDMyNC4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank" class="location" title="Buka di Google Maps">📍 Steikhaus, Bandung</a>
             </div>
@@ -1126,24 +1182,27 @@
         <div class="gift-grid">
           <!-- Rekening 1 -->
           <div class="gift-card">
-            <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank BCA</h3>
+            <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank MANDIRI</h3>
             <p
-              style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:400; letter-spacing:2px; margin-bottom:8px; color:var(--dark);">
-              3761668267</p>
+              style="font-family:'Playfair Display',serif; font-size:24px; font-weight:400; letter-spacing:3px; margin-bottom:8px; color:var(--dark);">
+              1320022670351</p>
             <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Fida Muhamad Rifqi</p>
-            <button class="copy-btn" onclick="copyRek('3761668267', this)">Salin Rekening</button>
+            <button class="copy-btn" onclick="copyRek('1320022670351', this)">Salin Rekening</button>
           </div>
           <!-- Rekening 2 -->
           <div class="gift-card">
             <h3 style="font-family:'Lora',serif; font-size:20px; color:var(--black); margin-bottom:12px;">Bank BCA
             </h3>
             <p
-              style="font-family:'Outfit',sans-serif; font-size:22px; font-weight:400; letter-spacing:2px; margin-bottom:8px; color:var(--dark);">
+              style="font-family:'Playfair Display',serif; font-size:24px; font-weight:400; letter-spacing:3px; margin-bottom:8px; color:var(--dark);">
               2832675416</p>
             <p style="font-size:12px; color:var(--mid); margin-bottom: 24px;">a.n Febrianti</p>
             <button class="copy-btn" onclick="copyRek('2832675416', this)">Salin Rekening</button>
           </div>
         </div>
+        <p id="gift-note"
+          style="font-family:'Playfair Display',serif; font-style:italic; font-size:15px; color:var(--mid); margin-top:32px; text-align:center; line-height:1.6;">
+          Bagi kami, doa tulus untuk keberkahan rumah tangga ini adalah hadiah yang paling berharga.</p>
       </div>
     </div>
 
@@ -1174,11 +1233,10 @@
         '.hero-eyebrow': "By the Grace of God",
         '.hero-date': "Sunday · August 2, 2026 · Bandung",
         '#surah-translation': "\"And among His signs is that He created for you mates from among yourselves, that you may dwell in tranquility with them, and He has put love and mercy between your hearts. Verily in that are signs for those who reflect.\"",
-        '#couple .eyebrow': "The Couple",
+        '#couple .section-title': "The Groom & Bride",
         '#countdown .eyebrow': "Towards the Big Day",
         '#countdown .section-title': "Countdown",
-        '#acara .eyebrow': "Event Details",
-        '#acara .section-title': "Schedule",
+        '#acara .section-title': "Event Details",
         '#ucapan .eyebrow': "Wishes & Prayers",
         '#ucapan .section-title': "Messages",
         '#ucapan p.body': "Please leave your best wishes and prayers for us.",
@@ -1188,6 +1246,7 @@
         '#gift .eyebrow': "Digital Gift",
         '#gift .section-title': "Send a Gift",
         '#gift .body': "For family and friends who wish to send a gift, you may transfer to the accounts below:",
+        '#gift-note': "For us, your heartfelt prayers for the blessing of this marriage are the most precious gift of all.",
         '.gift-card:nth-child(1) .copy-btn': "COPY NUMBER",
         '.gift-card:nth-child(2) .copy-btn': "COPY NUMBER",
         'footer .sub': "August 2, 2026 · Bandung",
@@ -1215,8 +1274,8 @@
       if (evTypes[0]) evTypes[0].innerText = "Wedding Ceremony";
 
       const evTitles = document.querySelectorAll('#acara h3');
-      if (evTitles[0]) evTitles[0].innerText = "Holy Matrimony";
-      if (evTitles[1]) evTitles[1].innerText = "Warm hospitality";
+      if (evTitles[0]) evTitles[0].innerText = "Akad Nikkah";
+      if (evTitles[1]) evTitles[1].innerText = "Celebration & Mingling";
 
       const btn = document.querySelector('.submit-btn');
       if (btn) btn.innerText = "Send Message";
