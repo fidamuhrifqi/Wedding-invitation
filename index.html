@@ -43,6 +43,191 @@
       overflow-x: hidden;
     }
 
+    body.access-pending,
+    body.access-denied {
+      background: var(--black);
+    }
+
+    #access-guard-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.045), transparent 34%),
+        linear-gradient(180deg, var(--black) 0%, #070707 54%, #020202 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    #access-guard-screen::before,
+    #access-guard-screen::after {
+      content: '';
+      position: absolute;
+      background-image: url('assets/lily.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      opacity: 0.055;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #access-guard-screen::before {
+      width: clamp(260px, 38vw, 460px);
+      height: clamp(260px, 38vw, 460px);
+      top: -12%;
+      left: -12%;
+      transform: rotate(18deg);
+    }
+
+    #access-guard-screen::after {
+      width: clamp(300px, 48vw, 560px);
+      height: clamp(300px, 48vw, 560px);
+      right: -14%;
+      bottom: -16%;
+      transform: rotate(-20deg);
+    }
+
+    body.access-pending #access-guard-screen,
+    body.access-denied #access-guard-screen {
+      display: flex;
+    }
+
+    body.access-pending #envelope-screen,
+    body.access-denied #envelope-screen,
+    body.access-pending main,
+    body.access-denied main,
+    body.access-pending footer,
+    body.access-denied footer,
+    body.access-pending .back-btn,
+    body.access-denied .back-btn,
+    body.access-pending .music-btn,
+    body.access-denied .music-btn {
+      visibility: hidden;
+    }
+
+    .access-card {
+      position: relative;
+      z-index: 1;
+      width: min(calc(100vw - 64px), 420px);
+      min-width: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      padding: 38px 30px;
+      text-align: center;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.07), transparent 36%),
+        rgba(255, 255, 255, 0.045);
+      box-shadow: 0 24px 90px rgba(0, 0, 0, 0.48);
+      backdrop-filter: blur(14px);
+    }
+
+    .access-card::before,
+    .access-card::after {
+      content: '';
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      border-color: rgba(255, 255, 255, 0.14);
+      border-style: solid;
+      pointer-events: none;
+    }
+
+    .access-card::before {
+      top: 16px;
+      left: 16px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .access-card::after {
+      right: 16px;
+      bottom: 16px;
+      border-width: 0 1px 1px 0;
+    }
+
+    .access-icon {
+      width: 54px;
+      height: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.045);
+      color: rgba(255, 255, 255, 0.78);
+      transform: rotate(45deg);
+    }
+
+    .access-icon svg {
+      width: 24px;
+      height: 24px;
+      transform: rotate(-45deg);
+      stroke: currentColor;
+    }
+
+    .access-card h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 400;
+      margin-bottom: 18px;
+      color: var(--white);
+      text-wrap: balance;
+    }
+
+    .access-rule {
+      width: 46px;
+      height: 1px;
+      margin: 0 auto 24px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .access-card p {
+      max-width: 310px;
+      margin: 0 auto;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-wrap: break-word;
+    }
+
+    .access-note {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .access-note p {
+      color: rgba(255, 255, 255, 0.32);
+      font-size: 12px;
+    }
+
+    .access-pending-content,
+    .access-denied-content {
+      display: none;
+    }
+
+    body.access-pending .access-pending-content,
+    body.access-denied .access-denied-content {
+      display: block;
+    }
+
+    @media (max-width:500px) {
+      .access-card {
+        padding: 34px 22px;
+      }
+
+      .access-card h1 {
+        font-size: 26px;
+      }
+    }
+
     /* ENVELOPE */
     #envelope-screen {
       position: fixed;
@@ -978,7 +1163,34 @@
   </style>
 </head>
 
-<body>
+<body class="access-pending">
+
+  <div id="access-guard-screen" aria-live="polite">
+    <div class="access-card">
+      <div class="access-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="5.5" y="10" width="13" height="10" rx="1.6"></rect>
+          <path d="M8.5 10V7.2a3.5 3.5 0 0 1 7 0V10"></path>
+          <path d="M12 14v2.5"></path>
+        </svg>
+      </div>
+
+      <div class="access-pending-content">
+        <h1 id="access-loading-title">Memeriksa Undangan</h1>
+        <div class="access-rule"></div>
+        <p id="access-loading-text">Mohon tunggu sebentar, tautan undangan sedang diverifikasi.</p>
+      </div>
+
+      <div class="access-denied-content">
+        <h1 id="private-title">Undangan Privat</h1>
+        <div class="access-rule"></div>
+        <p id="private-message">Undangan ini bersifat privat. Maaf, tautan ini hanya dapat diakses melalui perangkat tamu yang bersangkutan dan tidak dapat dibagikan ulang.</p>
+        <div class="access-note">
+          <p id="private-note">Jika Anda adalah tamu undangan dan mengalami kendala, silakan hubungi pengantin atau pengirim undangan untuk mendapatkan tautan akses baru.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ENVELOPE -->
   <div id="envelope-screen" onclick="openInvitation()">
@@ -1366,6 +1578,128 @@
 
     // === MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI BAWAH INI ===
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlyUlF-FYCL6xWOXk26vP5ecpar0LP43F9CX1bLAgK64oC4Tvn_6GGDrpvST1p4xXV/exec';
+    const DEVICE_STORAGE_KEY = 'partofff_private_device_id';
+    const HOME_SLUG = 'utama';
+    const HOME_ID_SLUG = 'utama-id';
+    const HOME_EN_SLUG = 'utama-en';
+
+    function getAccessSlugForLocation(urlValue) {
+      const url = new URL(urlValue);
+      const params = url.searchParams;
+      const directGuest = (params.get('to') || '').trim();
+      if (directGuest) return directGuest;
+
+      const hashGuest = decodeURIComponent(url.hash.replace(/^#/, '')).trim();
+      if (hashGuest) return hashGuest;
+
+      const pathGuest = decodeURIComponent(url.pathname.split('/').filter(Boolean).pop() || '').trim();
+      if (pathGuest && !pathGuest.includes('.html')) return pathGuest;
+
+      const lang = (params.get('lang') || params.get('len') || '').toLowerCase().trim();
+      if (lang === 'en') return 'utama-en';
+      if (lang === 'id' || lang === 'in') return 'utama-id';
+
+      return 'utama';
+    }
+
+    function getPrivateAccessSlug() {
+      return getAccessSlugForLocation(window.location.href);
+    }
+
+    function createDeviceId() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+
+      return 'device-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+    }
+
+    function getCookieDeviceId() {
+      const match = document.cookie.match(new RegExp('(?:^|; )' + DEVICE_STORAGE_KEY + '=([^;]+)'));
+      return match ? decodeURIComponent(match[1]) : '';
+    }
+
+    function setCookieDeviceId(deviceId) {
+      document.cookie = DEVICE_STORAGE_KEY + '=' + encodeURIComponent(deviceId) + '; max-age=31536000; path=/; SameSite=Lax';
+    }
+
+    function getOrCreateDeviceId() {
+      try {
+        let deviceId = localStorage.getItem(DEVICE_STORAGE_KEY);
+        if (!deviceId) {
+          deviceId = createDeviceId();
+          localStorage.setItem(DEVICE_STORAGE_KEY, deviceId);
+        }
+        return deviceId;
+      } catch (error) {
+        let deviceId = getCookieDeviceId();
+        if (!deviceId) {
+          deviceId = createDeviceId();
+          setCookieDeviceId(deviceId);
+        }
+        return deviceId;
+      }
+    }
+
+    function isHomeSlug(slug) {
+      return slug === HOME_SLUG || slug === HOME_ID_SLUG || slug === HOME_EN_SLUG;
+    }
+
+    function setAccessGuardLanguage() {
+      const isEn = (new URLSearchParams(window.location.search).get('len') || new URLSearchParams(window.location.search).get('lang') || '').toLowerCase() === 'en';
+      if (!isEn) return;
+
+      const loadingTitle = document.getElementById('access-loading-title');
+      const loadingText = document.getElementById('access-loading-text');
+      const privateTitle = document.getElementById('private-title');
+      const privateMessage = document.getElementById('private-message');
+      const privateNote = document.getElementById('private-note');
+
+      if (loadingTitle) loadingTitle.textContent = 'Checking Invitation';
+      if (loadingText) loadingText.textContent = 'Please wait while this invitation link is being verified.';
+      if (privateTitle) privateTitle.textContent = 'Private Invitation';
+      if (privateMessage) privateMessage.textContent = 'This invitation is private. Sorry, this link can only be accessed from the guest device and cannot be shared again.';
+      if (privateNote) privateNote.textContent = 'If you are an invited guest and have trouble opening this invitation, please contact the couple or the invitation sender for a new access link.';
+    }
+
+    function denyPrivateAccess() {
+      document.body.classList.remove('access-pending', 'access-allowed');
+      document.body.classList.add('access-denied');
+    }
+
+    function allowPrivateAccess(accessData, slug) {
+      document.body.classList.remove('access-pending', 'access-denied');
+      document.body.classList.add('access-allowed');
+      initializeInvitation(accessData && accessData.nama ? accessData.nama : '', slug);
+    }
+
+    function checkPrivateAccess() {
+      setAccessGuardLanguage();
+
+      const slug = getPrivateAccessSlug();
+      const deviceId = getOrCreateDeviceId();
+
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          action: 'checkAccess',
+          slug: slug,
+          deviceId: deviceId
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.result === 'allowed') {
+            allowPrivateAccess(data, slug);
+            return;
+          }
+
+          denyPrivateAccess();
+        })
+        .catch(() => {
+          denyPrivateAccess();
+        });
+    }
 
     function loadUcapan() {
       if (SCRIPT_URL === 'URL_WEB_APP_ANDA_DISINI') return;
@@ -1422,8 +1756,7 @@
       return null;
     }
 
-    // Load awal ketika halaman dibuka
-    window.addEventListener('DOMContentLoaded', () => {
+    function initializeInvitation(verifiedName, accessSlug) {
       applyLanguage();
       loadUcapan();
 
@@ -1433,7 +1766,7 @@
         if (thanks) thanks.style.display = 'block';
       }
 
-      const guestName = getGuestName();
+      const guestName = isHomeSlug(accessSlug) ? '' : (verifiedName || getGuestName());
       if (guestName) {
         document.getElementById('guest-name').textContent = guestName;
         document.getElementById('guest-name-container').style.display = 'block';
@@ -1442,6 +1775,11 @@
         const formName = document.getElementById('ucapan-name');
         if (formName) formName.value = guestName;
       }
+    }
+
+    // Load awal ketika halaman dibuka
+    window.addEventListener('DOMContentLoaded', () => {
+      checkPrivateAccess();
     });
 
     function submitUcapan() {
